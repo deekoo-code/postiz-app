@@ -137,10 +137,13 @@ const TikTokSettings: FC<{
         <Select
           label={t('label_who_can_see_this_video', 'Who can see this video?')}
           disabled={isUploadMode}
-          {...register('privacy_level', {
-            value: 'PUBLIC_TO_EVERYONE',
-          })}
+          {...register('privacy_level')}
         >
+          {/* TikTok's Content Sharing UX Guidelines require this field to have
+              no default value: the creator must actively choose a privacy
+              status. TikTokDto's @IsIn(['PUBLIC_TO_EVERYONE', ...]) already
+              rejects an empty string at save time, so leaving this unselected
+              is enough to force the choice and block submission until made. */}
           <option value="">{t('select', 'Select')}</option>
           {privacyLevel.map((item) => (
             <option key={item.value} value={item.value}>
@@ -255,12 +258,14 @@ const TikTokSettings: FC<{
         </div>
         <hr className="my-[15px] mb-[25px] border-tableBorder" />
         <div className="flex flex-col gap-[20px]">
+          {/* TikTok's guidelines require every interaction toggle to start
+              unchecked - the creator opts in, we don't opt in for them. */}
           <Checkbox
             label={t('label_comments', 'Allow Comments')}
             variant="hollow"
             disabled={isUploadMode}
             {...register('comment', {
-              value: true,
+              value: false,
             })}
           />
           <Checkbox

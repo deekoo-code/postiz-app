@@ -598,6 +598,18 @@ export class TiktokBusinessProvider
     return tracks[Math.floor(Math.random() * tracks.length)].id;
   }
 
+  // A missing privacy_level here means it was never actually selected
+  // upstream (the DTO/frontend should have caught that) - fail loudly instead
+  // of masking it with a public fallback.
+  private buildPrivacyLevel(firstPost: PostDetails<TikTokDto>) {
+    if (!firstPost.settings.privacy_level) {
+      throw new Error(
+        'TikTok privacy_level is required for direct post and was not set'
+      );
+    }
+    return firstPost.settings.privacy_level;
+  }
+
   private async buildPhotoBody(
     businessId: string,
     firstPost: PostDetails<TikTokDto>,
@@ -633,8 +645,10 @@ export class TiktokBusinessProvider
         ...(isDraft
           ? { is_draft: true }
           : {
-              privacy_level:
-                firstPost.settings.privacy_level || 'PUBLIC_TO_EVERYONE',
+              // TikTok's Content Sharing UX Guidelines require the creator to
+              // actively choose a privacy status - never silently default to
+              // public on their behalf. See buildPrivacyLevel below.
+              privacy_level: this.buildPrivacyLevel(firstPost),
               disable_comment: !this.assetBoolean(firstPost.settings.comment),
               // TikTok's own recommended-music flag is only a fallback for
               // when no track could be picked from the trending list.

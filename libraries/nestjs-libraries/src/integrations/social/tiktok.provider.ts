@@ -527,6 +527,17 @@ export class TiktokProvider extends SocialAbstract implements SocialProvider {
     const method = this.contentPostingMethod(firstPost);
 
     if (method === 'DIRECT_POST') {
+      // TikTok's Content Sharing UX Guidelines require the creator to actively
+      // choose a privacy status - never silently default to public on their
+      // behalf. A missing privacy_level here means it was never actually
+      // selected upstream (the DTO/frontend should have caught that), so we
+      // fail loudly instead of masking it with a public fallback.
+      if (!firstPost.settings.privacy_level) {
+        throw new Error(
+          'TikTok privacy_level is required for direct post and was not set'
+        );
+      }
+
       return {
         post_info: {
           ...(isPhoto && firstPost.settings.title
@@ -536,8 +547,7 @@ export class TiktokProvider extends SocialAbstract implements SocialProvider {
             ? { title: firstPost.message }
             : {}),
           ...(isPhoto ? { description: firstPost.message } : {}),
-          privacy_level:
-            firstPost.settings.privacy_level || 'PUBLIC_TO_EVERYONE',
+          privacy_level: firstPost.settings.privacy_level,
           ...(isPhoto
             ? {}
             : { disable_duet: !this.assetBoolean(firstPost.settings.duet) }),
