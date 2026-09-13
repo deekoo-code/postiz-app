@@ -7,6 +7,13 @@ on:
     tags:
       - '*'
 
+# Fork-local: upstream relies on the repo/org's default GITHUB_TOKEN
+# permissions to push packages. This fork's default token doesn't have
+# that, so declare it explicitly instead of depending on a repo setting.
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-containers-common:
     runs-on: ubuntu-latest
