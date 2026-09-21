@@ -3,7 +3,6 @@ import { getT } from '@gitroom/react/translation/get.translation.service.backend
 export const dynamic = 'force-dynamic';
 import { ReactNode } from 'react';
 import loadDynamic from 'next/dynamic';
-import { TestimonialComponent } from '@gitroom/frontend/components/auth/testimonial.component';
 import { LogoTextComponent } from '@gitroom/frontend/components/ui/logo-text.component';
 const ReturnUrlComponent = loadDynamic(() => import('./return.url.component'));
 export default async function AuthLayout({
@@ -24,13 +23,17 @@ export default async function AuthLayout({
         </div>
       </div>
       <div className="text-[36px] flex-1 pt-[88px] hidden lg:flex flex-col items-center">
-        <div className="text-center">
-          Over <span className="text-[42px] text-[#FC69FF]">20,000+</span>{' '}
-          Entrepreneurs use
+        <div className="text-center px-[40px]">
+          Conținut aprobat de client,
           <br />
-          Postiz To Grow Their Social Presence
+          programat și publicat de
+          <span className="text-[42px] text-[#00B4FF]"> CONCEPTIX</span>
         </div>
-        <TestimonialComponent />
+        <div className="text-[18px] text-white/60 text-center px-[60px] mt-[24px] max-w-[720px]">
+          Panoul intern al Conceptix Online SRL. Echipa noastră programează aici
+          postările pe care clientul le-a aprobat, pe conturile lui de Facebook,
+          Instagram, TikTok și X.
+        </div>
       </div>
     </div>
   );
