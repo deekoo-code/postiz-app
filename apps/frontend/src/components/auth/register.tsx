@@ -38,7 +38,13 @@ type Inputs = {
   providerToken: string;
   provider: string;
 };
-export function Register() {
+export function Register({
+  terms,
+  privacy,
+}: {
+  terms?: string;
+  privacy?: string;
+} = {}) {
   const getQuery = useSearchParams();
   const fetch = useFetch();
   const [provider] = useState(getQuery?.get('provider')?.toUpperCase());
@@ -228,7 +234,7 @@ export function RegisterAfter({
                 )}
                 &nbsp;
                 <a
-                  href={`https://postiz.com/terms`}
+                  href={terms || 'https://postiz.com/terms'}
                   className="underline hover:font-bold"
                   rel="nofollow"
                 >
@@ -237,7 +243,7 @@ export function RegisterAfter({
                 &nbsp;
                 {t('and', 'and')}&nbsp;
                 <a
-                  href={`https://postiz.com/privacy`}
+                  href={privacy || 'https://postiz.com/privacy'}
                   rel="nofollow"
                   className="underline hover:font-bold"
                 >

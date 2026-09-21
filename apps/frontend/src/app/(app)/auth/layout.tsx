@@ -24,15 +24,15 @@ export default async function AuthLayout({
       </div>
       <div className="text-[36px] flex-1 pt-[88px] hidden lg:flex flex-col items-center">
         <div className="text-center px-[40px]">
-          Conținut aprobat de client,
+          Client-approved content,
           <br />
-          programat și publicat de
+          scheduled and published by
           <span className="text-[42px] text-[#00B4FF]"> CONCEPTIX</span>
         </div>
         <div className="text-[18px] text-white/60 text-center px-[60px] mt-[24px] max-w-[720px]">
-          Panoul intern al Conceptix Online SRL. Echipa noastră programează aici
-          postările pe care clientul le-a aprobat, pe conturile lui de Facebook,
-          Instagram, TikTok și X.
+          The internal dashboard of Conceptix Online SRL. Our team schedules the
+          posts each client has approved, on that client's own Facebook,
+          Instagram, TikTok and X accounts.
         </div>
       </div>
     </div>

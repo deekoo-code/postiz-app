@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { Register } from '@gitroom/frontend/components/auth/register';
 import { Metadata } from 'next';
 import { brandName } from '@gitroom/helpers/utils/brand.name';
+import { termsUrl, privacyUrl } from '@gitroom/helpers/utils/brand.links';
 import Link from 'next/link';
 import { getT } from '@gitroom/react/translation/get.translation.service.backend';
 import { LoginWithOidc } from '@gitroom/frontend/components/auth/login.with.oidc';
@@ -31,5 +32,5 @@ export default async function Auth(params: {searchParams: Promise<{provider: str
       );
     }
   }
-  return <Register />;
+  return <Register terms={termsUrl()} privacy={privacyUrl()} />;
 }
