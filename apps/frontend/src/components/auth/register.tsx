@@ -72,13 +72,18 @@ export function Register({
     }
   }, [provider, code]);
   if (!code && !provider) {
-    return <RegisterAfter token="" provider="LOCAL" />;
+    return <RegisterAfter token="" provider="LOCAL" terms={terms} privacy={privacy} />;
   }
   if (!show) {
     return <LoadingComponent />;
   }
   return (
-    <RegisterAfter token={code} provider={provider?.toUpperCase() || 'LOCAL'} />
+    <RegisterAfter
+      token={code}
+      provider={provider?.toUpperCase() || 'LOCAL'}
+      terms={terms}
+      privacy={privacy}
+    />
   );
 }
 function getHelpfulReasonForRegistrationFailure(httpCode: number) {
@@ -93,9 +98,13 @@ function getHelpfulReasonForRegistrationFailure(httpCode: number) {
 export function RegisterAfter({
   token,
   provider,
+  terms,
+  privacy,
 }: {
   token: string;
   provider: string;
+  terms?: string;
+  privacy?: string;
 }) {
   const t = useT();
   const {
