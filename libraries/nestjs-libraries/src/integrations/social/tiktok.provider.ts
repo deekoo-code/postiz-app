@@ -40,7 +40,10 @@ export class TiktokProvider extends SocialAbstract implements SocialProvider {
     'user.info.basic',
     'video.publish',
     'video.upload',
-    'user.info.profile',
+    // 'user.info.profile' a fost scos: nu se face niciun apel care sa-i
+    // foloseasca datele (profile_deep_link, bio_description, is_verified),
+    // iar un scope cerut si nedemonstrat e motiv de respingere la auditul
+    // TikTok. Varianta business nu l-a cerut niciodata.
     'user.info.stats',
   ];
   override maxConcurrentJob = 10000;
