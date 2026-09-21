@@ -36,7 +36,11 @@ export class TiktokProvider extends SocialAbstract implements SocialProvider {
   isBetweenSteps = false;
   convertToJPEG = true;
   scopes = [
-    'video.list',
+    // 'video.list' scos: citeste doar videoclipurile PUBLICE ale contului,
+    // iar pana la aprobarea auditului TikTok forteaza toate postarile la
+    // SELF_ONLY ("App not approved for public posting"). Nu exista niciun
+    // videoclip public de citit, deci scope-ul nu poate fi demonstrat in
+    // clipul de audit. Se cere din nou dupa aprobare.
     'user.info.basic',
     'video.publish',
     'video.upload',
